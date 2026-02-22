@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Dark mode elements
   const darkModeToggle = document.getElementById("dark-mode-toggle");
   const darkModeIcon = darkModeToggle.querySelector(".dark-mode-icon");
-  const darkModeText = darkModeToggle.querySelector("span:last-child");
+  const darkModeText = darkModeToggle.querySelector(".dark-mode-text");
 
   // Activity categories with corresponding colors
   const activityTypes = {
