@@ -871,6 +871,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const body = `Hi,\n\nI wanted to share this activity with you:\n\n${activityName}\n${description}\n\nSchedule: ${schedule}\n\nLearn more at: ${pageUrl}\n\nBest regards`;
     const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     // Create a temporary anchor element to trigger email client without navigating away
+    // The element doesn't need cleanup since it's never appended to the DOM
     const tempLink = document.createElement('a');
     tempLink.href = mailtoUrl;
     tempLink.click();
