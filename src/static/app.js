@@ -552,6 +552,20 @@ document.addEventListener("DOMContentLoaded", () => {
             .join("")}
         </ul>
       </div>
+      <div class="social-share-buttons">
+        <button class="share-button twitter-share" title="Share on Twitter">
+          <span class="share-icon">𝕏</span>
+        </button>
+        <button class="share-button facebook-share" title="Share on Facebook">
+          <span class="share-icon">f</span>
+        </button>
+        <button class="share-button whatsapp-share" title="Share on WhatsApp">
+          <span class="share-icon">📱</span>
+        </button>
+        <button class="share-button email-share" title="Share via Email">
+          <span class="share-icon">✉</span>
+        </button>
+      </div>
       <div class="activity-card-actions">
         ${
           currentUser
@@ -585,6 +599,25 @@ document.addEventListener("DOMContentLoaded", () => {
           openRegistrationModal(name);
         });
       }
+    }
+
+    // Add click handlers for social share buttons
+    const twitterBtn = activityCard.querySelector(".twitter-share");
+    const facebookBtn = activityCard.querySelector(".facebook-share");
+    const whatsappBtn = activityCard.querySelector(".whatsapp-share");
+    const emailBtn = activityCard.querySelector(".email-share");
+
+    if (twitterBtn) {
+      twitterBtn.addEventListener("click", () => shareOnTwitter(name, details.description, formattedSchedule));
+    }
+    if (facebookBtn) {
+      facebookBtn.addEventListener("click", () => shareOnFacebook(name, details.description, formattedSchedule));
+    }
+    if (whatsappBtn) {
+      whatsappBtn.addEventListener("click", () => shareOnWhatsApp(name, details.description, formattedSchedule));
+    }
+    if (emailBtn) {
+      emailBtn.addEventListener("click", () => shareViaEmail(name, details.description, formattedSchedule));
     }
 
     activitiesList.appendChild(activityCard);
@@ -809,6 +842,39 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       messageDiv.classList.add("hidden");
     }, 5000);
+  }
+
+  // Social sharing functions
+  function shareOnTwitter(activityName, description, schedule) {
+    const pageUrl = window.location.href;
+    const text = `Check out ${activityName} at Mergington High School! ${description} Schedule: ${schedule}`;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(pageUrl)}`;
+    window.open(twitterUrl, '_blank', 'width=550,height=420');
+  }
+
+  function shareOnFacebook(activityName, description, schedule) {
+    const pageUrl = window.location.href;
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}&quote=${encodeURIComponent(`${activityName}: ${description}`)}`;
+    window.open(facebookUrl, '_blank', 'width=550,height=420');
+  }
+
+  function shareOnWhatsApp(activityName, description, schedule) {
+    const pageUrl = window.location.href;
+    const text = `Check out ${activityName} at Mergington High School!\n\n${description}\n\nSchedule: ${schedule}\n\nLearn more: ${pageUrl}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, '_blank');
+  }
+
+  function shareViaEmail(activityName, description, schedule) {
+    const pageUrl = window.location.href;
+    const subject = `Mergington High School Activity: ${activityName}`;
+    const body = `Hi,\n\nI wanted to share this activity with you:\n\n${activityName}\n${description}\n\nSchedule: ${schedule}\n\nLearn more at: ${pageUrl}\n\nBest regards`;
+    const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // Create a temporary anchor element to trigger email client without navigating away
+    // The element doesn't need cleanup since it's never appended to the DOM
+    const tempLink = document.createElement('a');
+    tempLink.href = mailtoUrl;
+    tempLink.click();
   }
 
   // Handle form submission
